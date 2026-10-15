@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Pause, Play } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { gallery, photo } from '@/tejvivaan/data';
 import { PageIntro } from '@/tejvivaan/components';
 import GlassFolder, { type ArtRecipe } from '@/components/ui/glass-folder-cards';
@@ -19,7 +19,13 @@ const roseGlass: ArtRecipe = {
 export function Gallery() {
   const [filter, setFilter] = useState('All');
   const [selected, setSelected] = useState<number | null>(null);
+  const [autoPaused, setAutoPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const resumeAfter = useRef(0);
+  const reducedMotion = useReducedMotion();
   const items = filter === 'All' ? gallery : gallery.filter(item => item.category === filter);
   const categories = [...new Set(gallery.map(item => item.category))];
   const folders = (filter === 'All' ? categories : [filter]).map(category => ({
@@ -42,10 +48,52 @@ export function Gallery() {
     if (index >= 0) setSelected(index);
   };
 
-  const scrollCarousel = (direction: -1 | 1) => {
+  const scrollCarousel = useCallback((direction: -1 | 1) => {
     const carousel = carouselRef.current;
-    if (carousel) carousel.scrollBy({ left: direction * carousel.clientWidth * 0.82, behavior: 'smooth' });
-  };
+    if (!carousel) return;
+    const cards = Array.from(carousel.children) as HTMLElement[];
+    if (!cards.length) return;
+    const max = carousel.scrollWidth - carousel.clientWidth;
+    const current = carousel.scrollLeft;
+    const positions = cards.map(card => Math.min(max, card.offsetLeft - cards[0].offsetLeft));
+    const left = direction === 1
+      ? current >= max - 2 ? 0 : positions.find(position => position > current + 2) ?? max
+      : current <= 2 ? max : positions.reverse().find(position => position < current - 2) ?? 0;
+    carousel.scrollTo({ left, behavior: reducedMotion ? 'instant' : 'smooth' });
+  }, [reducedMotion]);
+
+  const holdAutoScroll = () => { resumeAfter.current = Date.now() + 6000; };
+
+  useEffect(() => {
+    carouselRef.current?.scrollTo({ left: 0, behavior: 'instant' });
+    resumeAfter.current = 0;
+  }, [filter]);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || reducedMotion !== false || autoPaused || hovered || focused || dragging || selected !== null || items.length < 2) return;
+    let visible = false;
+    let timer: number | undefined;
+    const sync = () => {
+      window.clearInterval(timer);
+      timer = undefined;
+      if (!visible || document.hidden) return;
+      timer = window.setInterval(() => {
+        if (Date.now() >= resumeAfter.current) scrollCarousel(1);
+      }, 4000);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting && entry.intersectionRatio >= 0.4;
+      sync();
+    }, { threshold: [0, 0.4] });
+    observer.observe(carousel);
+    document.addEventListener('visibilitychange', sync);
+    return () => {
+      window.clearInterval(timer);
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', sync);
+    };
+  }, [filter, items.length, reducedMotion, autoPaused, hovered, focused, dragging, selected, scrollCarousel]);
 
   return <main>
     <PageIntro title="A closer look." description="Spaces to settle into, tables to gather around, and moments waiting to happen." image="gallery/hotel-1.jpg" secondaryImage="gallery/dining-3.jpg"/>
@@ -55,27 +103,39 @@ export function Gallery() {
       </div>
       <p className="tj-gallery-count" aria-live="polite">{items.length} photographs</p>
       <p className="tj-gallery-hint">Open a folder, then choose a photograph.</p>
-      <section className="tj-gallery-carousel" aria-labelledby="tj-gallery-carousel-title">
+      <section className="tj-gallery-carousel" aria-labelledby="tj-gallery-carousel-title" aria-roledescription="carousel"
+        onPointerEnter={event => { if (event.pointerType === 'mouse' || event.pointerType === 'pen') setHovered(true); }}
+        onPointerLeave={() => setHovered(false)}
+      >
         <div className="tj-gallery-carousel-head">
           <div>
             <p className="tj-gallery-carousel-kicker">A closer look</p>
             <h2 id="tj-gallery-carousel-title">Moments around Tejvivaan</h2>
           </div>
           <div className="tj-gallery-carousel-controls" aria-label="Carousel controls">
-            <button type="button" aria-label="Previous photographs" onClick={() => scrollCarousel(-1)}><ArrowLeft/></button>
-            <button type="button" aria-label="Next photographs" onClick={() => scrollCarousel(1)}><ArrowRight/></button>
+            {!reducedMotion && <button type="button" aria-label={autoPaused ? 'Resume automatic scrolling' : 'Pause automatic scrolling'} aria-pressed={autoPaused} aria-controls="tj-gallery-carousel-track" onClick={() => setAutoPaused(value => !value)}>{autoPaused ? <Play size={18}/> : <Pause size={18}/>}</button>}
+            <button type="button" aria-label="Previous photographs" aria-controls="tj-gallery-carousel-track" onClick={() => { holdAutoScroll(); scrollCarousel(-1); }}><ArrowLeft/></button>
+            <button type="button" aria-label="Next photographs" aria-controls="tj-gallery-carousel-track" onClick={() => { holdAutoScroll(); scrollCarousel(1); }}><ArrowRight/></button>
           </div>
         </div>
-        <div className="tj-gallery-carousel-track" ref={carouselRef}>
+        <div className="tj-gallery-carousel-track" id="tj-gallery-carousel-track" ref={carouselRef}
+          onPointerDown={() => { setDragging(true); holdAutoScroll(); }}
+          onPointerUp={() => { setDragging(false); holdAutoScroll(); }}
+          onPointerCancel={() => { setDragging(false); holdAutoScroll(); }}
+          onPointerLeave={() => setDragging(false)}
+          onWheel={holdAutoScroll}
+          onFocusCapture={() => setFocused(true)}
+          onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+        >
           {items.map((item, index) => <motion.button
             key={item.file}
             type="button"
             className="tj-gallery-carousel-card"
             aria-label={`View ${item.category.toLowerCase()} photograph ${index + 1}`}
-            initial={{ opacity: 0, y: 26, scale: 0.98 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 26, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.28 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: (index % 4) * 0.06 }}
+            transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1], delay: reducedMotion ? 0 : (index % 4) * 0.06 }}
             onClick={() => openPhoto(item.file)}
           >
             <img src={photo(`gallery/${item.file}`)} alt={`${item.category} at Best Western Plus Tejvivaan`} loading="lazy"/>
