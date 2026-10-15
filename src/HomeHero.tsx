@@ -1,0 +1,8 @@
+import {useState} from 'react';
+import {useReducedMotion} from 'framer-motion';
+import {ArrowDown,Pause,Play,ArrowUpRight} from 'lucide-react';
+import {ImageStreamHero} from './components/ui/image-stream-hero';
+import {coast,hotels} from './data';
+import {roomPhotos} from './RoomGallery';
+import {WaveShader} from './WaveShader';
+export function HomeHero(){const[paused,setPaused]=useState(false);const reduced=useReducedMotion();const images=[{src:coast},...roomPhotos.tejvivaan,...roomPhotos.ramachandra,...hotels.slice(0,2).map(h=>({src:h.image}))];return <section className="stream-home" aria-label="Discover Visakhapatnam"><ImageStreamHero images={images} paused={paused||!!reduced}><div className="stream-content"><div className="stream-heading"><h1>Your next escape.<br/><span className="outline-text">Coming into view.</span></h1><p>Visakhapatnam. A little coast, a lot to discover.</p></div><div className="stream-bottom"><p>From sea-breeze mornings to a room that feels like yours.<br/>Find a new perspective on the City of Destiny.</p><a href="#find-stay" className="button">Find your stay <ArrowDown size={18}/></a></div></div><button className="stream-pause" onClick={()=>setPaused(!paused)} disabled={!!reduced} aria-label={paused||reduced?'Play image stream':'Pause image stream'}>{paused||reduced?<Play size={16}/>:<Pause size={16}/>}<span>{paused||reduced?'Motion paused':'Pause motion'}</span></button></ImageStreamHero><div className="stream-wave-band"><WaveShader paused={paused||!!reduced}/><span>THE COAST IS CALLING.</span><span>Make yourself at home. <ArrowUpRight size={18}/></span></div></section>}

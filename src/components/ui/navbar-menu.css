@@ -1,0 +1,43 @@
+.site-header .main-navigation { position: static; height: 100%; align-items: center; gap: 16px; }
+.nav-menu-item { display: flex; align-items: center; height: 100%; }
+.nav-menu-trigger { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 10px 4px; border: 0; border-bottom: 2px solid transparent; color: var(--blue); background: transparent; font: inherit; font-weight: 650; white-space: nowrap; }
+.nav-menu-trigger:hover,.nav-menu-trigger[aria-expanded=true] { border-bottom-color: var(--blue); }
+.nav-menu-trigger svg { transition: transform .2s ease; }
+.nav-menu-trigger[aria-expanded=true] svg { transform: rotate(180deg); }
+.nav-menu-trigger:focus-visible { outline: 3px solid #77baff; outline-offset: 3px; }
+.nav-menu-panel { position: absolute; top: calc(100% - 1px); left: 28px; right: 28px; z-index: 25; max-width: 1120px; max-height: calc(100dvh - 160px); overflow-y: auto; overscroll-behavior: contain; margin-inline: auto; display: grid; grid-template-columns: minmax(230px, .8fr) minmax(0, 1.7fr); border: 2px solid var(--blue); box-shadow: 7px 7px 0 #003c7e; background: white; color: var(--blue); transform-origin: top center; }
+.nav-menu-intro { padding: 30px; background: var(--pale); border-right: 1px solid var(--line); }
+.nav-menu-intro > span { display: block; margin-bottom: 18px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.nav-menu-intro h2 { margin: 0 0 14px; font-size: 29px; line-height: 1.15; }
+.nav-menu-intro p { margin: 0 0 22px; font-size: 13px; font-weight: 400; line-height: 1.7; }
+.nav-menu-intro > a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+.nav-menu-links { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-content: start; gap: 6px 18px; padding: 24px; }
+.nav-content-link { display: flex; align-items: center; gap: 14px; min-width: 0; min-height: 92px; padding: 16px 10px; border-bottom: 1px solid var(--line); transition: background .18s; }
+.nav-content-link:hover { background: var(--pale); text-decoration: none; }
+.nav-content-link > div { flex: 1; min-width: 0; }
+.nav-content-link strong { display: block; font-size: 14px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
+.nav-content-link span { display: block; margin-top: 6px; font-size: 11px; font-weight: 400; line-height: 1.5; }
+.nav-content-link > svg { flex-shrink: 0; }
+.nav-property-link { grid-column: 1 / -1; padding-block: 10px; }
+.nav-property-link img { width: 100px; height: 64px; object-fit: cover; border: 1px solid var(--line); }
+@media(min-width:781px) and (max-width:1100px) {
+  .site-header .main-navigation { gap: 8px; }
+  .nav-menu-trigger { gap: 4px; padding-inline: 0; font-size: 12px; }
+  .nav-menu-panel { left: 20px; right: 20px; }
+}
+@media(max-width:780px) {
+  .site-header .main-navigation { display: none; position: absolute; top: calc(100% - 1px); left: 0; right: 0; height: auto; max-height: calc(100dvh - 112px); overflow-y: auto; overscroll-behavior: contain; padding: 12px 22px 22px; margin: 0; align-items: stretch; gap: 0; border-bottom: 2px solid var(--blue); }
+  .site-header .main-navigation.open { display: flex; }
+  .nav-menu-item { display: block; height: auto; border-bottom: 1px solid var(--line); }
+  .nav-menu-trigger { justify-content: space-between; width: 100%; min-height: 54px; padding: 12px 0; font-size: 15px; }
+  .nav-menu-panel { position: static; display: block; max-height: none; margin: 0 0 16px; border: 1px solid var(--blue); box-shadow: 3px 3px 0 #a7c8e8; overflow: visible; }
+  .nav-menu-intro { padding: 18px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .nav-menu-intro > span { display: none; }
+  .nav-menu-intro h2 { font-size: 25px; }
+  .nav-menu-intro p { margin-bottom: 10px; font-size: 12px; }
+  .nav-menu-links { grid-template-columns: minmax(0,1fr); gap: 0; padding: 0 14px 12px; }
+  .nav-content-link { min-height: 76px; padding: 14px 4px; }
+  .nav-property-link img { width: 68px; height: 60px; }
+}
+@media(prefers-reduced-motion:reduce) { .nav-menu-trigger svg,.nav-content-link { transition: none; } }
+@media print { .nav-menu-panel { display: none; } }

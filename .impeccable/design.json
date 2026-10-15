@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "title": "Best Western Plus Tejvivaan · Liquid glass",
+  "colors": {"canvas":"#d9e1ea","glass":"rgba(226,235,245,.52)","edge":"rgba(255,255,255,.76)","ink":"#243448","muted":"#52657a","accent":"#861b3f"},
+  "typography": {"body":"Noto Sans","display":"Literata","hero":"Federant (supplied flower hero)"},
+  "materials": {"backdropBlur":"28px","border":"1px solid rgba(255,255,255,.76)","shadow":"0 22px 54px -28px rgba(22,40,62,.44)","cornerRadius":"14–16px"},
+  "motion": {"flower":"Existing six-scene WebGL shader and animation preserved","site":"Intersection reveal, photo hover, gallery viewer, responsive navigation; reduced-motion support"},
+  "routes": ["/","/about","/rooms","/restaurant","/meetings-and-events","/services","/gallery","/offers","/contact","/blog","/blog/:slug","/privacy","/terms","/account/*"],
+  "bookingUrl": "https://www.bestwestern.com/en_US/book/visakhapatnam/hotel-rooms/best-western-plus-tejvivaan/propertyCode.76993.html",
+  "assets": "ASSETS.md and 03-tejvivaan-site-inventory.md",
+  "direction": "User-supplied silver-blue liquid glass. Preserve the original animated flower exactly."
+}

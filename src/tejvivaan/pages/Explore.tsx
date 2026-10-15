@@ -1,0 +1,15 @@
+import { useEffect, useState, type ReactNode } from 'react';
+import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
+import { ArrowUpRight, ArrowRight, ArrowLeft, Menu, X, Phone, Mail, MapPin, Heart, Check, Maximize2 } from 'lucide-react';
+import { ADDRESS, BOOKING_URL, SOURCE, articles, dining, facilities, gallery, nearby, offers, photo, rooms, venues } from '@/tejvivaan/data';
+import { BookLink, Reveal, PageIntro, SaveHotel, NotFound } from '@/tejvivaan/components';
+import LinearCard from '@/components/ui/linear-card';
+import { AmenitiesGrid } from '@/tejvivaan/AmenitiesGrid';
+
+export function About() {
+  return <main><PageIntro title="A warm welcome to Visakhapatnam." description="A place to rest, connect and celebrate in the heart of the city." image="about-img-2.jpg" secondaryImage="about-img-1.jpg"/><section className="tj-section tj-about-copy"><div><h2>The city outside.<br/>Comfort within.</h2><p>Best Western Plus Hotel Tejvivaan brings 73 rooms and suites, multicuisine dining and flexible event spaces to Railway Station Road. Whether you are here for business, a family visit or a city break, make yourself at home.</p><p>Choose a Superior Room, Deluxe Room or Executive Suite. Enjoy all-day dining at Café Plus, gather at Skyeline, or bring your next event to Viya, Oakwood or Let’s Talk.</p><div className="tj-inline"><BookLink/><SaveHotel/></div></div><img src={photo('about-img-1.jpg')} alt="Tejvivaan hotel interior" loading="lazy"/></section><section className="tj-section tj-nearby"><h2>Step out. Explore Vizag.</h2><p>Distances and travel times published by the hotel; allow for traffic and current road conditions.</p><div className="tj-nearby-grid">{nearby.map(([name,distance,image])=><LinearCard className="tj-nearby-card" title={name} key={name}><img src={photo(image)} alt={name} loading="lazy"/><div><h3>{name}</h3><p>{distance}</p><a className="tj-text-link" href={'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name+' Visakhapatnam')} target="_blank" rel="noreferrer">View map<ArrowUpRight size={15}/></a></div></LinearCard>)}</div></section></main>;
+}
+
+export function Services() {
+  return <main><PageIntro title="Leave the little details to us." description="Everyday comforts and thoughtful services, so you can make more of your time here." image="fitness-2.jpg" secondaryImage="gallery/hotel-2.jpg"/><section className="tj-section"><div className="tj-services-feature"><img src={photo('fitness-2.jpg')} alt="Hotel fitness centre" loading="lazy"/><div><h2>Keep your own rhythm.</h2><p>A workout before breakfast. A quick Grab & Go bite. A late dinner in your room. The hotel’s facilities fit around your day.</p><p>Contact the team for accessible arrangements, service hours and anything you need before you arrive.</p><Link to="/contact" className="tj-text-link">Talk to the team<ArrowRight size={17}/></Link></div></div><h2>Guest services & facilities.</h2><AmenitiesGrid items={facilities}/><p className="tj-muted">Some services are available on request or at an additional charge. Breakfast and other inclusions depend on the rate selected.</p></section></main>;
+}

@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "project": {
+    "name": "best westren",
+    "productType": null,
+    "stack": [
+      "React",
+      "TypeScript",
+      "Vite"
+    ]
+  },
+  "sources": {
+    "tokens": [],
+    "components": [],
+    "assets": [],
+    "instructions": [
+      "PRODUCT.md"
+    ]
+  },
+  "design": {
+    "colorMode": "unknown",
+    "colors": {},
+    "typography": {},
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": []
+  },
+  "decisions": [
+    "User selected blue-and-white brutalism, focused on Visakhapatnam. Square geometry, structural blue borders, hard shadows.",
+    "Retain Noto Sans. Adapt 21st Booking Calendar 25156 date constraints and nights summary using native inputs.",
+    "User requested dynamic hero and animated scroll: adapt retrieved Smooth Scroll Hero2061 with Framer Motion, three scenes, pause/play and reduced-motion support.",
+    "21st shader retrieval hit daily quota; original blue-wave GLSL fallback implemented and disclosed in ASSETS.md."
+  ],
+  "evidence": [
+    {
+      "fact": "project.instructions",
+      "source": "PRODUCT.md"
+    }
+  ],
+  "generatedAt": "2026-10-14T09:40:44.547Z"
+}

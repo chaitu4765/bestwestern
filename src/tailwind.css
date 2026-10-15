@@ -1,0 +1,29 @@
+/* Prefix utilities and omit Preflight to preserve the existing site's styles. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw) source(".");
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-foreground: #003c7e;
+  --color-card: #ffffff;
+  --color-card-foreground: #003c7e;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #003c7e;
+  --color-primary: #003c7e;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #e9f2fb;
+  --color-secondary-foreground: #003c7e;
+  --color-muted: #e9f2fb;
+  --color-muted-foreground: #3c5e84;
+  --color-accent: #d4e6fa;
+  --color-accent-foreground: #003c7e;
+  --color-destructive: #a62331;
+  --color-border: #003c7e;
+  --color-input: #9fb9d4;
+  --color-ring: #003c7e;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}

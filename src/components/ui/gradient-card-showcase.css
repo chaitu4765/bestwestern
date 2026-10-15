@@ -1,0 +1,94 @@
+/* Preserve the reference's skew-to-square panels, glow and floating squares.
+   Content height is natural: no fixed-height frame, crop or animated padding. */
+.gradient-card-showcase {
+  gap: 38px;
+  padding-block: 18px;
+}
+.skew-card {
+  padding: 24px 12px;
+  --skew-panel-transform: skewX(calc(10deg * var(--skew-direction)));
+  --skew-content-transform: translate(0, 0);
+  --skew-float-opacity: 0;
+  --skew-glow-opacity: .16;
+}
+.skew-panel {
+  inset: 6px 15%;
+  background: linear-gradient(315deg, var(--blue) 12%, #77baff 72%, #d4e6fa);
+  transform: var(--skew-panel-transform);
+  transition: transform 500ms cubic-bezier(.16, 1, .3, 1), opacity 350ms ease;
+}
+.skew-panel-glow {
+  filter: blur(20px);
+  opacity: var(--skew-glow-opacity);
+}
+.skew-card-content {
+  z-index: 2;
+  transform: var(--skew-content-transform);
+  transition: transform 500ms cubic-bezier(.16, 1, .3, 1);
+}
+.skew-card-content > .hotel-card,
+.skew-card-content > .linear-card-slot > .hotel-card {
+  height: 100%;
+  box-shadow: 5px 5px 0 var(--blue);
+}
+.skew-floats { z-index: 3; }
+.skew-float {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  background: #ffffff9c;
+  border: 1px solid #77baff;
+  backdrop-filter: blur(8px);
+  opacity: var(--skew-float-opacity);
+  transform: scale(.7);
+  transition: opacity 300ms ease, transform 500ms cubic-bezier(.16, 1, .3, 1);
+}
+.skew-float-top { top: -2px; left: 38px; }
+.skew-float-bottom { bottom: -2px; right: 32px; }
+.skew-card:focus-within {
+  --skew-panel-transform: skewX(0deg) scaleX(1.3);
+  --skew-content-transform: translate(-6px, -6px);
+  --skew-float-opacity: 1;
+  --skew-glow-opacity: .3;
+}
+.skew-card:focus-within .skew-float {
+  transform: scale(1);
+  animation: hotel-card-float 2s ease-in-out 2;
+}
+.skew-card:focus-within .skew-float-bottom { animation-delay: -1s; }
+@media (hover: hover) and (pointer: fine) {
+  .skew-card:hover {
+    --skew-panel-transform: skewX(0deg) scaleX(1.3);
+    --skew-content-transform: translate(-6px, -6px);
+    --skew-float-opacity: 1;
+    --skew-glow-opacity: .3;
+  }
+  .skew-card:hover .skew-float {
+    transform: scale(1);
+    animation: hotel-card-float 2s ease-in-out 2;
+  }
+  .skew-card:hover .skew-float-bottom { animation-delay: -1s; }
+}
+@keyframes hotel-card-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translate(-6px, -8px); }
+}
+@media (max-width: 780px) {
+  .gradient-card-showcase { gap: 24px; padding-block: 10px; }
+  .skew-card { padding: 20px 8px; }
+  .skew-panel { inset-inline: 18%; }
+  .skew-float { width: 42px; height: 42px; }
+}
+@media (max-width: 380px) {
+  .gradient-card-showcase .hotel-copy { padding: 18px 14px; }
+  .gradient-card-showcase .hotel-copy h3 { font-size: 26px; overflow-wrap: anywhere; }
+  .gradient-card-showcase .hotel-bottom { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skew-card-content, .skew-panel, .skew-float {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  .skew-float { display: none; }
+}

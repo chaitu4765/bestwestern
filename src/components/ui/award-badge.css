@@ -1,0 +1,37 @@
+.account-layout > .account-profile-spotlight { grid-column: 1 / -1; min-width: 0; width: min(100%, 760px); margin-inline: auto; }
+.profile-member-card { width: 100%; margin: 0; color: white; background: var(--blue); border: 2px solid var(--blue); box-shadow: 6px 6px 0 #b5d9fa; }
+.profile-badge { position: relative; isolation: isolate; --profile-rx: 0deg; --profile-ry: 0deg; --profile-light-x: 50%; --profile-light-y: 40%; background: #003c7e; transform: perspective(700px) rotateX(var(--profile-rx)) rotateY(var(--profile-ry)); transform-origin: center; transition: transform 200ms ease-out; }
+.profile-light { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at var(--profile-light-x) var(--profile-light-y),#a4d8ff66,transparent 70%); }
+.profile-hologram { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; mix-blend-mode: screen; }
+.profile-glow-ray { transform-origin: 130px 160px; animation: profile-badge-shimmer 6s ease-in-out infinite; }
+.profile-glow-paused .profile-glow-ray { animation-play-state: paused; }
+.profile-badge-content { position: relative; padding: 22px 36px 32px; }
+.profile-badge-top { display: flex; gap: 8px; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.profile-badge-top > span { font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+.profile-glow-control { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #b5d9fa80; color: white; background: #003c7e; flex-shrink: 0; }
+.profile-badge-identity { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 32px; align-items: center; }
+.profile-badge-details { min-width: 0; }
+.member-avatar { width: 112px; height: 112px; border: 3px solid white; outline: 1px solid #b4dcff; outline-offset: 6px; border-radius: 50%; display: grid; place-items: center; color: var(--blue); background: #f1f8ff; }
+.member-avatar span { font-size: 40px; font-weight: 800; letter-spacing: -.03em; }
+.profile-badge .profile-badge-content h2 { font-size: clamp(28px, 3.2vw, 42px); font-weight: 750; line-height: 1.2; margin: 0 0 10px; color: white; overflow-wrap: anywhere; }
+.profile-badge .profile-membership { display: flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.5; margin: 0 0 18px; color: white; }
+.profile-membership > span { display: block; width: 7px; height: 7px; background: #a9dcff; flex-shrink: 0; }
+.profile-manage { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 44px; font-size: 12px; font-weight: 650; padding: 10px 14px; border: 1px solid #b5d9fa80; color: white; }
+.profile-manage:hover { text-decoration: underline; text-underline-offset: 4px; }
+.profile-manage:focus-visible,.profile-glow-control:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+.profile-member-card > .linear-card-action { border-top: 1px solid #b5d9fa80; padding: 8px 20px; }
+.profile-member-card > .linear-card-action .linear-view-button { min-height: 44px; background: transparent; color: white; border-color: #b5d9fa80; }
+.linear-dialog-body > .profile-member-card { max-width: 760px; margin-inline: auto; }
+@keyframes profile-badge-shimmer { 0%,100% { transform: rotate(var(--ray-angle)); } 50% { transform: rotate(calc(var(--ray-angle) + 18deg)); } }
+@media(max-width:600px) {
+  .profile-badge-content { padding: 12px 18px 22px; }
+  .profile-badge-top { margin-bottom: 12px; }
+  .profile-badge-identity { grid-template-columns: 64px minmax(0, 1fr); gap: 20px; }
+  .member-avatar { width: 64px; height: 64px; outline-offset: 4px; }
+  .member-avatar span { font-size: 25px; }
+  .profile-badge .profile-badge-content h2 { font-size: 24px; }
+  .profile-badge .profile-membership { font-size: 11px; margin-bottom: 12px; }
+  .profile-manage { gap: 12px; padding: 8px 10px; font-size: 11px; }
+  .profile-member-card > .linear-card-action { padding: 6px 14px; }
+}
+@media(prefers-reduced-motion:reduce) { .profile-badge { transform: none !important; transition: none; }.profile-glow-ray { animation: none; transform: rotate(var(--ray-angle)); } }

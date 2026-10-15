@@ -1,0 +1,43 @@
+{
+  "component": {
+    "id": 25156,
+    "componentId": 12379,
+    "authorUserId": "user_36Tbt0v8JdD4jEycmBFhR8tojnR",
+    "name": "Booking Calendar",
+    "demoName": "Default",
+    "description": "A hotel-style date picker calendar that shows check-in and check-out dates with the number of nights selected.",
+    "previewUrl": "https://cdn.21st.dev/user_36Tbt0v8JdD4jEycmBFhR8tojnR/v-calendar-15/default/preview.1787759919299.webp",
+    "installCommand": "npx shadcn@latest add \"https://21st.dev/r/cnippet-dev/v-calendar-15?api_key=$API_KEY_21ST\"",
+    "componentCode": "\"use client\";\n\nimport * as React from \"react\";\nimport { Calendar } from \"@/components/ui/v-calendar-15-utils/calendar\";\n\nfunction addDays(date: Date, days: number) {\n  const d = new Date(date);\n  d.setDate(d.getDate() + days);\n  return d;\n}\n\nconst today = new Date();\ntoday.setHours(0, 0, 0, 0);\n\nexport default function Particle() {\n  const [checkout, setCheckout] = React.useState<Date | undefined>(\n    addDays(today, 5),\n  );\n\n  const nights = checkout\n    ? Math.round((checkout.getTime() - today.getTime()) / 86_400_000)\n    : 0;\n\n  return (\n    <div className=\"flex flex-col gap-3\">\n      <Calendar\n        disabled={{ before: addDays(today, 1) }}\n        mode=\"single\"\n        modifiers={{ checkin: [today] }}\n        modifiersClassNames={{\n          checkin:\n            \"bg-primary text-primary-foreground rounded-md font-semibold\",\n        }}\n        onSelect={setCheckout}\n        selected={checkout}\n        startMonth={today}\n      />\n      <div className=\"rounded-lg border px-4 py-3 text-sm\">\n        <div className=\"flex justify-between\">\n          <span className=\"text-muted-foreground\">Check-in</span>\n          <span className=\"font-medium\">\n            {today.toLocaleDateString(\"en-US\", {\n              day: \"numeric\",\n              month: \"short\",\n            })}\n          </span>\n        </div>\n        <div className=\"mt-1 flex justify-between\">\n          <span className=\"text-muted-foreground\">Check-out</span>\n          <span className=\"font-medium\">\n            {checkout\n              ? checkout.toLocaleDateString(\"en-US\", {\n                  day: \"numeric\",\n                  month: \"short\",\n                })\n              : \"—\"}\n          </span>\n        </div>\n        {nights > 0 && (\n          <p className=\"mt-2 border-t pt-2 text-center font-semibold\">\n            {nights} night{nights !== 1 ? \"s\" : \"\"}\n          </p>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+    "demoCode": "import BookingCalendar from \"@/components/ui/v-calendar-15\";\n\nexport default function Default() {\n  return (\n    <div className=\"flex min-h-svh w-full items-center justify-center p-6\">\n      <BookingCalendar />\n    </div>\n  );\n}\n",
+    "registryDependencies": {
+      "filesWithRegistry": {
+        "/components/ui/button.tsx": {
+          "code": "import * as React from \"react\"\nimport { Slot } from \"@radix-ui/react-slot\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground hover:bg-primary/90\",\n        destructive:\n          \"bg-destructive text-destructive-foreground hover:bg-destructive/90\",\n        outline:\n          \"border border-input bg-background hover:bg-accent hover:text-accent-foreground\",\n        secondary:\n          \"bg-secondary text-secondary-foreground hover:bg-secondary/80\",\n        ghost: \"hover:bg-accent hover:text-accent-foreground\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n      size: {\n        default: \"h-10 px-4 py-2\",\n        sm: \"h-9 rounded-md px-3\",\n        lg: \"h-11 rounded-md px-8\",\n        icon: \"h-10 w-10\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  },\n)\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean\n}\n\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    const Comp = asChild ? Slot : \"button\"\n    return (\n      <Comp\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        {...props}\n      />\n    )\n  },\n)\nButton.displayName = \"Button\"\n\nexport { Button, buttonVariants }\n",
+          "registry": "ui"
+        },
+        "/components/ui/calendar.tsx": {
+          "code": "\"use client\"\n\nimport * as React from \"react\"\nimport { ChevronLeft, ChevronRight } from \"lucide-react\"\nimport { DayPicker } from \"react-day-picker\"\n\nimport { cn } from \"@/lib/utils\"\nimport { buttonVariants } from \"@/components/ui/button\"\n\nexport type CalendarProps = React.ComponentProps<typeof DayPicker>\n\nfunction Calendar({\n  className,\n  classNames,\n  showOutsideDays = true,\n  ...props\n}: CalendarProps) {\n  return (\n    <DayPicker\n      showOutsideDays={showOutsideDays}\n      className={cn(\"p-3\", className)}\n      classNames={{\n        months: \"flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0\",\n        month: \"space-y-4\",\n        caption: \"flex justify-center pt-1 relative items-center\",\n        caption_label: \"text-sm font-medium\",\n        nav: \"space-x-1 flex items-center\",\n        nav_button: cn(\n          buttonVariants({ variant: \"outline\" }),\n          \"h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100\"\n        ),\n        nav_button_previous: \"absolute left-1\",\n        nav_button_next: \"absolute right-1\",\n        table: \"w-full border-collapse space-y-1\",\n        head_row: \"flex\",\n        head_cell:\n          \"text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]\",\n        row: \"flex w-full mt-2\",\n        cell: \"h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20\",\n        day: cn(\n          buttonVariants({ variant: \"ghost\" }),\n          \"h-9 w-9 p-0 font-normal aria-selected:opacity-100\"\n        ),\n        day_range_end: \"day-range-end\",\n        day_selected:\n          \"bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground\",\n        day_today: \"bg-accent text-accent-foreground\",\n        day_outside:\n          \"day-outside text-muted-foreground aria-selected:bg-accent/50 aria-selected:text-muted-foreground\",\n        day_disabled: \"text-muted-foreground opacity-50\",\n        day_range_middle:\n          \"aria-selected:bg-accent aria-selected:text-accent-foreground\",\n        day_hidden: \"invisible\",\n        ...classNames,\n      }}\n      components={{\n        IconLeft: ({ className, ...props }) => (\n          <ChevronLeft className={cn(\"h-4 w-4\", className)} {...props} />\n        ),\n        IconRight: ({ className, ...props }) => (\n          <ChevronRight className={cn(\"h-4 w-4\", className)} {...props} />\n        ),\n      }}\n      {...props}\n    />\n  )\n}\nCalendar.displayName = \"Calendar\"\n\nexport { Calendar }\n",
+          "registry": "ui"
+        }
+      },
+      "npmDependencies": {
+        "@radix-ui/react-slot": "latest",
+        "class-variance-authority": "latest",
+        "date-fns": "4.1.0",
+        "lucide-react": "latest",
+        "react-day-picker": "8.10.1"
+      }
+    },
+    "isPublic": true,
+    "registryTeamId": null,
+    "registryUserId": "user_36Tbt0v8JdD4jEycmBFhR8tojnR"
+  },
+  "quota": {
+    "tier": "free",
+    "remaining": 1,
+    "perDay": 2,
+    "resetAt": "2026-10-15T00:00:00.000Z",
+    "upgradeUrl": "https://21st.dev/pricing"
+  }
+}

@@ -1,0 +1,41 @@
+export const SOURCE = 'https://www.bestwesternplustejvivaan.com';
+export const BOOKING_URL = 'https://www.bestwestern.com/en_US/book/visakhapatnam/hotel-rooms/best-western-plus-tejvivaan/propertyCode.76993.html';
+export const photo = (path: string) => `${SOURCE}/images/${path}`;
+export const ADDRESS = 'Railway Station Road, Opp. DRM Office, Visakhapatnam, Andhra Pradesh 530016';
+export const rooms = [
+  {id:'superiorroom',name:'Superior Room',area:280,image:'superiorooms.jpg',description:'A restful city base, with a choice of king or twin beds and everything you need to settle in.',features:['King or twin beds','LED television','Wi-Fi','Tea & coffee facilities']},
+  {id:'deluxeroom',name:'Deluxe Room',area:380,image:'deluxeroom.jpg',description:'Room to slow down. A sitting area and kitchenette make longer stays feel a little more like home.',features:['Sitting area','Kitchenette','Work desk','Modern bathroom']},
+  {id:'executivesuite',name:'Executive Suite',area:560,image:'suiteroom.jpg',description:'More space for your own rhythm, with comfortable seating and a dedicated place to catch up on work.',features:['Spacious seating','Work area','Minibar','Tea & coffee facilities']},
+];
+export const venues = [
+  {name:'Viya',image:'banquets/viya.jpg',area:2000,size:'50 × 40 ft',theatre:200,cluster:84,u:72,classroom:90,round:120},
+  {name:'Oakwood I',image:'banquets/oakwood-1.jpg',area:1050,size:'35 × 30 ft',theatre:70,cluster:42,u:30,classroom:30,round:48},
+  {name:'Oakwood II',image:'banquets/oakwood-2.jpg',area:1100,size:'31 × 36 ft',theatre:70,cluster:42,u:30,classroom:30,round:48},
+  {name:'Let’s Talk',image:'banquets/conference.jpg',area:400,size:'22 × 18 ft',theatre:30,cluster:null,u:14,classroom:null,round:null},
+];
+export const dining = [
+  {name:'Café Plus',image:'restaurant/CafePlus.jpg',description:'A table for every appetite. Indian, Chinese and Continental favourites, a live kitchen and warm, all-day hospitality.',detail:'Open 24 hours · Multicuisine'},
+  {name:'Skyeline',image:'restaurant/skyline-13.jpg',description:'Take your time over dinner, with panoramic views and a different perspective on the city.',detail:'Panoramic dining'},
+  {name:'In-room dining',image:'restaurant/inroom2.jpg',description:'A quiet meal in your own space, with Indian, Chinese, Mexican and Italian choices, plus a menu for younger guests.',detail:'Available 24 hours'},
+  {name:'The bar',image:'restaurant/bar-1.jpg',description:'An inviting setting to catch up and unwind. Ask the hotel for the current drinks selection and opening hours.',detail:'Drinks & conversation'},
+  {name:'In-house bakery',image:'restaurant/bakery.jpg',description:'Something sweet for a celebration, or simply for today. Speak to the dining team about the available selection.',detail:'Bakes & celebrations'},
+];
+export const facilities = ['Breakfast service','Fitness centre','Parking','Grab & Go breakfast','24-hour in-room dining','Wi-Fi','Tea & coffee facilities','Packaged drinking water','Minibar','LED television','Work desk','Laptop / electronic safe','Hairdryer','Bathroom amenities','International dialling','Iron & board on request','Turndown on request','Doctor on call','Travel desk','Wheelchair assistance','Left-luggage room','Laundry & dry cleaning'];
+export const nearby = [
+  ['Railway station','0.5 km · 5 min','railway-station.jfif'],['Airport','11 km · 25 min','Vizag-Airport.jpg'],['Local market','2 km · 10 min','market.jpg'],['RK Beach','3 km · 10 min','beach.jpg'],['Visakha Museum','4 km · 15 min','visakha-museum.jpg'],['Zoological Park','8 km · 15 min','zoo.jpg'],['Rushikonda Beach','13 km · 30 min','Rushikonda-beach.jpg'],['Araku Valley','112 km · 3 hr 30 min','araku-valley.jpg'],['Borra Caves','89 km · 2 hr 50 min','borra-caves-vizag.jpg'],
+];
+export const gallery = [
+  ...['dining-1.jpg','dining-2.jpg','dining-3.jpg','dining-4.jpg','sky-1.jpg','sky-2.jpg','sky-5.jpg','skye-3.jpg','sky-6.jpeg','skye-4.jpg','skyline-13.jpg','skyline-11.jpg','skyline-12.jpg','skyline-10.jpg','CafePlus1.jpg','CafePlus.jpg'].map(file=>({file,category:'Dining'})),
+  ...['bar-1.jpg','bar-2.jpg'].map(file=>({file,category:'Bar'})),
+  ...['banquet-1.jpg','banquet-2.jpg','banquet-3.jpg','conference.jpg','viya.jpg','viya-2.jpg','oak-1.jpg','oak-2.jpg','oak-3.jpg'].map(file=>({file,category:'Meetings & events'})),
+  ...['room-1.jpg','room-2.jpg','room-3.jpg','room-4.jpg'].map(file=>({file,category:'Rooms'})),
+  ...['hotel-1.jpg','hotel-2.jpg','hotel-3.jpg'].map(file=>({file,category:'Hotel'})),
+];
+export const offers = [['Dining at Tejvivaan','offer-banner.jpg'],['Valentine’s celebrations','valentine.jpg'],['Goli soda','goli-soda.jpg'],['Dine in','ad-v1.jpg'],['Birthday celebrations','offer-3.jpg'],['Dinner offers','offer-4.jpg']];
+export const articles = [
+  {slug:'7-things-to-consider-when-choosing-a-restaurant',title:'Seven things to consider when choosing a restaurant',date:'28 May 2022',image:'best-family-restaurant-in-vizag-4.jpg',paragraphs:['A memorable meal starts before you reach the table. Consider the cuisine, location and atmosphere, alongside recent reviews and the needs of your group. A convenient location can make a relaxed evening much easier to plan.','For a busy service, check whether a reservation is needed and how long you may have to wait. Cleanliness, attentive service and a comfortable setting matter as much as the menu. Café Plus brings a range of cuisines together at Tejvivaan; contact the dining team for current menus and arrangements.']},
+  {slug:'benefits-and-features-of-staying-in-a-business-hotel-in-visakhapatnam',title:'A comfortable base for business in Visakhapatnam',date:'21 April 2022',image:'top-hotel-in-visakhapatnam.jpg',paragraphs:['A business stay works best when the practical details are easy. Comfortable rooms, space to work and a convenient city location help you find a rhythm between meetings and time to yourself.','Tejvivaan brings accommodation, dining and meeting facilities together in one property. Choose from three room categories, ask about the right event space for your group, and enjoy dining without leaving the hotel. Confirm any specific equipment or service requirements directly with the team before your visit.']},
+  {slug:'the-best-gathering-spot-for-veg-and-non-veg-cuisine-in-vizag',title:'Good food, good company at Café Plus',date:'30 March 2022',image:'best-family-restaurant-in-vizag.jpg',paragraphs:['Family occasions and informal catch-ups both deserve a welcoming table. Café Plus offers vegetarian and non-vegetarian choices across Indian, Chinese and Continental cuisine, with a live kitchen at the heart of the experience.','All-day dining makes it easier to fit a meal around your visit to Visakhapatnam. The hotel also describes options for younger diners and round-the-clock in-room service. Ask the restaurant about current dishes, dietary requirements and arrangements for your group.']},
+  {slug:'best-veg-and-non-veg-restaurant-in-visakhapatnam',title:'A taste of Tejvivaan',date:'7 March 2022',image:'blog-2-feat.jpg',paragraphs:['Explore the hotel’s dining choices, from regional favourites and South Indian dishes to international selections. Café Plus is the main multicuisine restaurant, with options for both vegetarian and non-vegetarian diners.','The bar, bakery and in-room dining offer other ways to enjoy your stay. Plan a meal with friends, arrange a cake for an occasion, or order something comforting to your room. Menus and availability can change; the dining team can help you choose.']},
+  {slug:'how-do-i-choose-a-banquet-hall-in-visakhapatnam',title:'Choosing a space for your next gathering',date:'4 March 2022',image:'top-banquet-halls-in-visakhapatnam.jpg',paragraphs:['Start with your guest count and the kind of occasion you have in mind. A theatre layout, classroom session and seated celebration each need a different arrangement. Compare the space, catering options and equipment before choosing a venue.','Tejvivaan offers Viya, Oakwood I, Oakwood II and Let’s Talk. The larger spaces suit celebrations and conferences, while the meeting room supports smaller discussions. Share your preferred date and setup with the team so they can confirm capacity, availability and an appropriate proposal.']},
+];

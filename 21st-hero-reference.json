@@ -1,0 +1,28 @@
+{
+  "component": {
+    "id": 2061,
+    "componentId": 1907,
+    "authorUserId": "user_2wy4fCMd9v4AsO2ag0ZtQ5yFYMW",
+    "name": "Smooth Scroll Hero",
+    "demoName": "Default",
+    "description": "A React component that creates a smooth-scrolling hero section with parallax background effects. Features responsive images for mobile and desktop, with customizable scroll animations built using Framer Motion.",
+    "previewUrl": "https://cdn.21st.dev/ishamsu/smooth-scroll-hero/default/preview.1747142616016.png",
+    "installCommand": "npx shadcn@latest add \"https://21st.dev/r/ishamsu/smooth-scroll-hero?api_key=$API_KEY_21ST\"",
+    "componentCode": "\"use client\";\nimport * as React from \"react\";\n\nimport {\n\tmotion,\n\tuseMotionTemplate,\n\tuseScroll,\n\tuseTransform,\n} from \"framer-motion\";\n\ninterface iISmoothScrollHeroProps {\n\t/**\n\t * Height of the scroll section in pixels\n\t * @default 1500\n\t */\n\tscrollHeight: number;\n\t/**\n\t * Background image URL for desktop view\n\t * @default \"https://cdn.21st.dev/assets/mirror/50/50b4b749aaf073843fc6cd19e1af2e06364caf610ae881ff9d309c3f84049cec.jpg\"\n\t */\n\tdesktopImage: string;\n\t/**\n\t * Background image URL for mobile view\n\t * @default \"https://cdn.21st.dev/assets/mirror/1c/1c0b50c23cbd64dee0b682b601f50e5876ef5d3edca6056a3da18149021d4a79.jpg\"\n\t */\n\tmobileImage: string;\n\t/**\n\t * Initial clip path percentage\n\t * @default 25\n\t */\n\tinitialClipPercentage: number;\n\t/**\n\t * Final clip path percentage\n\t * @default 75\n\t */\n\tfinalClipPercentage: number;\n}\n\ninterface iISmoothScrollHeroBackgroundProps extends iISmoothScrollHeroProps {}\n\nconst SmoothScrollHeroBackground: React.FC<\n\tiISmoothScrollHeroBackgroundProps\n> = ({\n\tscrollHeight,\n\tdesktopImage,\n\tmobileImage,\n\tinitialClipPercentage,\n\tfinalClipPercentage,\n}) => {\n\tconst {scrollY} = useScroll();\n\n\tconst clipStart = useTransform(\n\t\tscrollY,\n\t\t[0, scrollHeight],\n\t\t[initialClipPercentage, 0],\n\t);\n\tconst clipEnd = useTransform(\n\t\tscrollY,\n\t\t[0, scrollHeight],\n\t\t[finalClipPercentage, 100],\n\t);\n\n\tconst clipPath = useMotionTemplate`polygon(${clipStart}% ${clipStart}%, ${clipEnd}% ${clipStart}%, ${clipEnd}% ${clipEnd}%, ${clipStart}% ${clipEnd}%)`;\n\n\tconst backgroundSize = useTransform(\n\t\tscrollY,\n\t\t[0, scrollHeight + 500],\n\t\t[\"170%\", \"100%\"],\n\t);\n\n\treturn (\n\t\t<motion.div\n\t\t\tclassName=\"sticky top-0 h-screen w-full bg-black\"\n\t\t\tstyle={{\n\t\t\t\tclipPath,\n\t\t\t\twillChange: \"transform, opacity\",\n\t\t\t}}\n\t\t>\n\t\t\t{/* Mobile background */}\n\t\t\t<motion.div\n\t\t\t\tclassName=\"absolute inset-0 md:hidden\"\n\t\t\t\tstyle={{\n\t\t\t\t\tbackgroundImage: `url(${mobileImage})`,\n\t\t\t\t\tbackgroundSize,\n\t\t\t\t\tbackgroundPosition: \"center\",\n\t\t\t\t\tbackgroundRepeat: \"no-repeat\",\n\t\t\t\t}}\n\t\t\t/>\n\t\t\t{/* Desktop background */}\n\t\t\t<motion.div\n\t\t\t\tclassName=\"absolute inset-0 hidden md:block\"\n\t\t\t\tstyle={{\n\t\t\t\t\tbackgroundImage: `url(${desktopImage})`,\n\t\t\t\t\tbackgroundSize,\n\t\t\t\t\tbackgroundPosition: \"center\",\n\t\t\t\t\tbackgroundRepeat: \"no-repeat\",\n\t\t\t\t}}\n\t\t\t/>\n\t\t</motion.div>\n\t);\n};\n\n/**\n * A smooth scroll hero component with parallax background effect\n * @param props - Component props\n * @returns React component\n */\n const SmoothScrollHero: React.FC<iISmoothScrollHeroProps> = ({\n\tscrollHeight = 1500,\n\tdesktopImage = \"https://cdn.21st.dev/assets/mirror/50/50b4b749aaf073843fc6cd19e1af2e06364caf610ae881ff9d309c3f84049cec.jpg\",\n\tmobileImage = \"https://cdn.21st.dev/assets/mirror/1c/1c0b50c23cbd64dee0b682b601f50e5876ef5d3edca6056a3da18149021d4a79.jpg\",\n\tinitialClipPercentage = 25,\n\tfinalClipPercentage = 75,\n}) => {\n\treturn (\n\t\t<div\n\t\t\tstyle={{height: `calc(${scrollHeight}px + 100vh)`}}\n\t\t\tclassName=\"relative w-full\"\n\t\t>\n\t\t\t<SmoothScrollHeroBackground\n\t\t\t\tscrollHeight={scrollHeight}\n\t\t\t\tdesktopImage={desktopImage}\n\t\t\t\tmobileImage={mobileImage}\n\t\t\t\tinitialClipPercentage={initialClipPercentage}\n\t\t\t\tfinalClipPercentage={finalClipPercentage}\n\t\t\t/>\n\t\t</div>\n\t);\n};\nexport default SmoothScrollHero;\n",
+    "demoCode": "import SmoothScrollHero  from \"@/components/ui/smooth-scroll-hero\";\n\nconst DemoOne = () => {\n  return (\n    <div className=\"relative min-h-screen\">\n\t\t\t\t<SmoothScrollHero\n\t\t\t\t\tscrollHeight={1500}\n\t\t\t\t\tdesktopImage=\"https://cdn.21st.dev/assets/mirror/50/50b4b749aaf073843fc6cd19e1af2e06364caf610ae881ff9d309c3f84049cec.jpg\"\n\t\t\t\t\tmobileImage=\"https://cdn.21st.dev/assets/mirror/1c/1c0b50c23cbd64dee0b682b601f50e5876ef5d3edca6056a3da18149021d4a79.jpg\"\n\t\t\t\t\tinitialClipPercentage={25}\n\t\t\t\t\tfinalClipPercentage={75}\n\t\t\t\t/>\n\t\t\t</div>\n  );\n};\n\nexport { DemoOne };\n",
+    "registryDependencies": {
+      "filesWithRegistry": {},
+      "npmDependencies": {}
+    },
+    "isPublic": true,
+    "registryTeamId": null,
+    "registryUserId": null
+  },
+  "quota": {
+    "tier": "free",
+    "remaining": 0,
+    "perDay": 2,
+    "resetAt": "2026-10-15T00:00:00.000Z",
+    "upgradeUrl": "https://21st.dev/pricing"
+  }
+}
